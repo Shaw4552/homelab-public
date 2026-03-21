@@ -69,3 +69,12 @@ This approach ensures predictable addressing across all VLANs and reduces ambigu
 - infrastructure and administrative networks are intentionally separated
 - server networks are defined at both sites for consistency, even if workloads are centralized
 - legacy addressing is phased out during migration to maintain a clean final-state design
+
+## Relationship to Other Components
+
+This addressing model supports:
+
+- VLAN segmentation (network boundaries)
+- firewall policy enforcement
+- VPN routing between sites
+- simplified troubleshooting and operations
