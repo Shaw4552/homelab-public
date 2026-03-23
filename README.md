@@ -1,14 +1,34 @@
 # Enterprise-Style Homelab Network
 
-Designed and implemented a multi-site, segmented network using enterprise-grade security and infrastructure design principles.
+##  Network Architecture
 
-This project demonstrates the design and implementation of a production-style, security-focused network architecture within a homelab environment.
+![Network Architecture](./diagrams/network-architecture.png)
 
-It focuses on segmentation, security boundaries, service placement, and multi-site connectivity using real-world infrastructure design principles.
+##  VLAN Trust Model
+
+![VLAN Trust Model](./diagrams/vlan-trust-model.png)
+
+##  Site A Detailed Topology
+
+![Site A Topology](./diagrams/site-a-topology.png)
+
+## 💡 What This Demonstrates
+
+This project demonstrates the design and implementation of a multi-site network with:
+
+• VLAN-based segmentation aligned to trust boundaries  
+• firewall-enforced inter-VLAN access control using a deny-by-default model  
+• centralized services including DNS and infrastructure systems  
+• secure connectivity using VPN (WireGuard)  
+• real-world traffic flow control and network isolation  
+
+It reflects practical, hands-on experience building and operating a production-style network environment.
 
 ---
 
-## 🚀 Overview
+## 🔗 Repository Overview
+
+This repository contains full documentation, diagrams, and design details for the environment.
 
 The environment simulates a small-scale enterprise network with:
 
@@ -96,6 +116,20 @@ It demonstrates the ability to:
 * apply zero-trust-inspired principles
 * implement production-style infrastructure patterns
 * document systems clearly and professionally
+
+---
+
+## 🛠️ Troubleshooting Example
+
+### Issue: IoT devices unable to resolve DNS
+
+- Identified IoT VLAN was isolated from internal services
+- Verified DNS server placement in VLAN 50 (Servers)
+- Implemented controlled firewall rule allowing IoT → DNS only
+- Maintained segmentation while restoring required functionality
+
+**Result:**  
+IoT devices regained DNS access without exposing internal network resources.
 
 ---
 
