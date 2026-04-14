@@ -96,3 +96,57 @@ Provides:
 ---
 
 This DNS architecture provides a secure, private, and centrally managed foundation for name resolution across the entire network environment.
+
+## Incident: Intermittent DNS / Service Instability (Resolved)
+
+### Summary
+An intermittent network instability issue was observed affecting multiple services, including Plex, Pi-hole, and reverse proxy endpoints. Monitoring (Uptime Kuma) reported repeated up/down alerts (flapping behavior).
+
+### Symptoms
+- Plex availability fluctuating
+- DNS resolution intermittently slow or failing
+- Reverse proxy (Caddy) inconsistent responses
+- Increased latency when pinging internal services
+- UniFi alert: "Multiple devices using the same IP address"
+
+### Root Cause
+A duplicate static IP conflict on the Infrastructure VLAN (VLAN 99):
+
+- `10.10.99.11` was assigned to:
+  - Caddy reverse proxy container (dns01)
+  - UniFi U6 Lite access point
+
+This resulted in ARP table instability and inconsistent packet routing.
+
+### Impact
+- Intermittent service failures
+- DNS inconsistency across clients
+- Reverse proxy instability
+- Monitoring alert noise (false positives due to flapping)
+
+### Resolution
+- Reassigned U6 Lite AP to a unique IP address (`10.10.99.21`)
+- Maintained Caddy at `10.10.99.11`
+- Verified ARP table stability across clients
+- Confirmed resolution via:
+  - Stable ping latency
+  - No further UniFi IP conflict alerts
+  - Uptime Kuma returning to normal state
+
+### Lessons Learned
+- Static IP assignments must be centrally managed and documented
+- Infrastructure and container IP ranges must be clearly separated
+- Monitoring systems (Uptime Kuma) are critical for early detection of L2/L3 issues
+- Apparent application issues may originate from underlying network conflicts
+
+### Preventative Measures
+- Implemented structured IP allocation strategy:
+
+| Range | Purpose |
+|------|--------|
+| 10.10.99.1–20 | Core infrastructure |
+| 10.10.99.21–49 | Network devices |
+| 10.10.99.50–99 | Container services |
+| 10.10.99.100+ | DHCP |
+
+- Future changes require updating IP allocation documentation before deployment
