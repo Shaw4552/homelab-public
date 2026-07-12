@@ -67,11 +67,24 @@ The environment simulates a small-scale enterprise network with:
 
 ## 🧩 Technologies Used
 
-* Ubiquiti UniFi (UDM Pro, APs)
-* Pi-hole + Unbound (DNS filtering and recursion)
-* WireGuard (VPN)
-* DD-WRT / OpenWRT (edge networking)
-* Docker (self-hosted services)
+Networking
+
+• UniFi
+• WireGuard
+• OpenWrt
+
+Infrastructure
+
+• Docker
+• Linux
+• Pi-hole
+• Unbound
+
+Future
+
+• Prometheus
+• Grafana
+• LibreNMS
 
 ---
 
