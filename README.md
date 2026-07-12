@@ -94,6 +94,43 @@ Access between zones is explicitly permitted through firewall policy.
 
 ## 🛠️ Skills Demonstrated
 
+---
+
+# 🔎 Featured Engineering Case Studies
+
+These investigations document real production-style troubleshooting, root-cause analysis, and validation performed in this environment.
+
+### Recursive DNS Hardening and DNSSEC Repair
+
+Diagnosed recursive DNS interception caused by gateway content filtering, restored DNSSEC trust validation, removed resolver ambiguity, and implemented repeatable validation checks.
+
+**Technologies**
+
+- Pi-hole
+- Unbound
+- Docker
+- DNSSEC
+- Linux
+- Network troubleshooting
+
+→ [Read the case study](./projects/incident-investigation/recursive-dns-hardening.md)
+
+---
+
+### Proxmox Intel i217-LM Network Instability
+
+Investigated intermittent network failures affecting virtualization workloads, identified the underlying NIC behavior, implemented mitigations, and documented long-term operational improvements.
+
+**Technologies**
+
+- Proxmox VE
+- Linux networking
+- Intel NIC troubleshooting
+- Virtualization
+- Infrastructure operations
+
+→ [Read the case study](./projects/incident-investigation/proxmox-i217lm-network-instability.md)
+
 This project reflects hands-on experience in:
 
 * network segmentation and VLAN design
