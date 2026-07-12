@@ -1,5 +1,17 @@
 # Enterprise-Style Homelab Network
 
+## Project Goals
+
+This homelab is designed to simulate enterprise infrastructure while providing hands-on experience with:
+
+- network engineering
+- infrastructure automation
+- DNS services
+- virtualization
+- monitoring and observability
+- Linux administration
+- secure systems design
+
 ##  Network Architecture
 
 ![Network Architecture](./diagrams/network-architecture.png)
