@@ -1,98 +1,65 @@
-# Enterprise-Style Homelab Network
+# Enterprise-Style Homelab Infrastructure Portfolio
 
-## Project Goals
+## Overview
 
-This homelab is designed to simulate enterprise infrastructure while providing hands-on experience with:
+This repository documents a multi-site homelab environment designed around enterprise infrastructure, networking, security, monitoring, automation, and operational reliability.
 
-- network engineering
-- infrastructure automation
-- DNS services
-- virtualization
-- monitoring and observability
-- Linux administration
-- secure systems design
+The environment is used as a hands-on platform for building and maintaining practical skills across:
 
-##  Network Architecture
+* network engineering
+* systems administration
+* Linux infrastructure
+* virtualization
+* containerized services
+* monitoring and observability
+* DNS architecture
+* security segmentation
+* troubleshooting
+* infrastructure documentation
+
+The lab is intentionally designed to resemble a small enterprise environment rather than a collection of isolated home services.
+
+---
+
+## Architecture
+
+### Network Architecture
 
 ![Network Architecture](./diagrams/network-architecture.png)
 
-##  VLAN Trust Model
+### VLAN Trust Model
 
 ![VLAN Trust Model](./diagrams/vlan-trust-model.png)
 
-##  Site A Detailed Topology
+### Site A Detailed Topology
 
 ![Site A Topology](./diagrams/site-a-topology.png)
 
-## 💡 What This Demonstrates
+---
 
-This project demonstrates the design and implementation of a multi-site network with:
+## Core Infrastructure
 
-• VLAN-based segmentation aligned to trust boundaries  
-• firewall-enforced inter-VLAN access control using a deny-by-default model  
-• centralized services including DNS and infrastructure systems  
-• secure connectivity using VPN (WireGuard)  
-• real-world traffic flow control and network isolation  
+The environment includes:
 
-It reflects practical, hands-on experience building and operating a production-style network environment.
+* Proxmox VE virtualization
+* Linux virtual machines and LXC containers
+* Docker-based application services
+* UniFi routing, switching, and wireless infrastructure
+* multi-site connectivity
+* segmented VLAN architecture
+* site-to-site VPN connectivity
+* centralized DNS
+* internal HTTPS and PKI
+* infrastructure monitoring
+* operational backup and recovery procedures
 
 ---
 
-## 🔗 Repository Overview
+## Networking and Security
 
-This repository contains full documentation, diagrams, and design details for the environment.
+The network follows a trust-based segmentation model.
 
-The environment simulates a small-scale enterprise network with:
-
-* multi-site architecture (primary infrastructure + remote access site)
-* VLAN-based segmentation aligned to trust zones
-* deny-by-default firewall enforcement
-* centralized infrastructure and service hosting
-* secure remote access and site-to-site connectivity
-* production-style documentation and design standards
-
----
-
-## 🧠 Architecture Highlights
-
-* VLAN segmentation based on trust boundaries (not device type)
-* Consistent IP addressing scheme across multiple sites
-* Explicit firewall-controlled inter-VLAN communication
-* Separation of infrastructure, services, and endpoint networks
-* Wireless networks mapped directly to security zones
-* Centralized DNS filtering with recursive resolution (Pi-hole + Unbound)
-* VPN architecture supporting both remote access and site-to-site connectivity
-
----
-
-## 🧩 Technologies Used
-
-Networking
-
-• UniFi
-• WireGuard
-• OpenWrt
-
-Infrastructure
-
-• Docker
-• Linux
-• Pi-hole
-• Unbound
-
-Future
-
-• Prometheus
-• Grafana
-• LibreNMS
-
----
-
-## 🔐 Network Segmentation Model
-
-The network follows a hierarchical trust model:
-
-```
+```text
 Admin
 ↓
 Infrastructure
@@ -100,6 +67,8 @@ Infrastructure
 Servers
 ↓
 Trusted / Work
+↓
+Media / Application Zones
 ↓
 Gaming
 ↓
@@ -112,115 +81,289 @@ Guest
 Quarantine
 ```
 
-All segments are isolated by default.
-Access between zones is explicitly permitted through firewall policy.
+Inter-VLAN communication is controlled through explicit firewall policy.
 
----
+The design follows a deny-by-default approach where access between trust zones is permitted only when required.
 
-## 🛠️ Skills Demonstrated
+Key networking concepts demonstrated include:
 
----
-
-# 🔎 Featured Engineering Case Studies
-
-These investigations document real production-style troubleshooting, root-cause analysis, and validation performed in this environment.
-
-### Recursive DNS Hardening and DNSSEC Repair
-
-Diagnosed recursive DNS interception caused by gateway content filtering, restored DNSSEC trust validation, removed resolver ambiguity, and implemented repeatable validation checks.
-
-**Technologies**
-
-- Pi-hole
-- Unbound
-- Docker
-- DNSSEC
-- Linux
-- Network troubleshooting
-
-→ [Read the case study](./projects/incident-investigation/recursive-dns-hardening.md)
-
----
-
-### Proxmox Intel i217-LM Network Instability
-
-Investigated intermittent network failures affecting virtualization workloads, identified the underlying NIC behavior, implemented mitigations, and documented long-term operational improvements.
-
-**Technologies**
-
-- Proxmox VE
-- Linux networking
-- Intel NIC troubleshooting
-- Virtualization
-- Infrastructure operations
-
-→ [Read the case study](./projects/incident-investigation/proxmox-i217lm-network-instability.md)
-
-This project reflects hands-on experience in:
-
-* network segmentation and VLAN design
-* firewall policy design (deny-by-default model)
-* multi-site network architecture
-* VPN design (remote access and site-to-site)
-* DNS architecture (filtering + recursive resolution)
-* infrastructure planning and service placement
-* technical documentation aligned with enterprise practices
-
----
-
-## 🎯 Purpose
-
-This repository is part of a broader effort to develop practical, real-world skills in network engineering and infrastructure design.
-
-It demonstrates the ability to:
-
-* design secure, segmented network environments
-* apply zero-trust-inspired principles
-* implement production-style infrastructure patterns
-* document systems clearly and professionally
-
----
-
-## 🛠️ Troubleshooting Example
-
-### Issue: IoT devices unable to resolve DNS
-
-- Identified IoT VLAN was isolated from internal services
-- Verified DNS server placement in VLAN 50 (Servers)
-- Implemented controlled firewall rule allowing IoT → DNS only
-- Maintained segmentation while restoring required functionality
-
-**Result:**  
-IoT devices regained DNS access without exposing internal network resources.
-
----
-
-## 📈 Future Enhancements
-
-* infrastructure automation (IaC: Terraform / Ansible)
-* monitoring and observability (Prometheus / Grafana)
-* high-availability DNS design
-* advanced routing and policy-based traffic control
-* containerized service expansion
-
----
-
-## 📚 Documentation
-
-Detailed design documentation is organized by component:
-
-* network overview
-* IP addressing plan
 * VLAN segmentation
-* firewall policy
-* wireless design
+* firewall policy design
+* inter-VLAN routing
+* multi-site architecture
+* wireless network segmentation
 * VPN architecture
-* DNS architecture
-* network topology
+* infrastructure service isolation
+* controlled DNS access
+* least-privilege access patterns
 
 ---
 
-## 📌 Notes
+## DNS Infrastructure
 
-This is a **sanitized environment**.
-IP ranges, hostnames, and identifiers have been modified for public sharing.
+DNS services are built around Pi-hole and Unbound.
+
+The architecture demonstrates:
+
+* recursive DNS resolution
+* DNS filtering
+* centralized policy management
+* local DNS records
+* multi-site DNS services
+* DNSSEC validation
+* service redundancy
+* infrastructure naming
+* troubleshooting and validation workflows
+
+Detailed DNS documentation is available in:
+
+* [`06-dns-architecture.md`](./06-dns-architecture.md)
+
+---
+
+## Virtualization and Systems Administration
+
+The lab uses Proxmox VE as the primary virtualization platform.
+
+Workloads include:
+
+* Linux LXC containers
+* Linux virtual machines
+* containerized infrastructure services
+* monitoring platforms
+* application services
+* administrative workstations
+
+Operational tasks include:
+
+* service deployment
+* storage configuration
+* container lifecycle management
+* Linux troubleshooting
+* network troubleshooting
+* backup and recovery
+* infrastructure validation
+
+---
+
+## Monitoring and Observability
+
+The environment includes centralized infrastructure monitoring using LibreNMS and SNMPv3.
+
+Monitoring covers infrastructure such as:
+
+* Proxmox hosts
+* Linux containers
+* UniFi networking devices
+* application infrastructure
+* DNS systems
+* network availability
+* service health
+
+The monitoring environment is documented separately in the public project:
+
+[**enterprise-monitoring-observability**](https://github.com/Shaw4552/enterprise-monitoring-observability)
+
+This project demonstrates:
+
+* device onboarding
+* SNMPv3 configuration
+* infrastructure health monitoring
+* alerting design
+* service visibility
+* operational troubleshooting
+* monitoring documentation
+
+---
+
+## Internal HTTPS and PKI
+
+Internal services use HTTPS through a centralized reverse proxy and private certificate authority architecture.
+
+The environment includes experience with:
+
+* Caddy
+* reverse proxy configuration
+* internal DNS names
+* TLS certificates
+* private certificate authorities
+* certificate trust distribution
+* service publishing
+* HTTPS troubleshooting
+
+---
+
+## Automation and Change Management
+
+Infrastructure changes are increasingly managed through Git-based workflows.
+
+Practices include:
+
+* Git repositories as infrastructure documentation
+* branch-based changes
+* pull request workflows
+* deployment scripts
+* validation scripts
+* rollback procedures
+* change documentation
+* GitHub Actions and CI/CD concepts
+
+This provides a repeatable and auditable approach to infrastructure changes.
+
+---
+
+## Incident Investigation and Troubleshooting
+
+The lab also serves as a platform for documenting real infrastructure incidents.
+
+Case studies include:
+
+### Proxmox Intel I217-LM Network Instability
+
+[`projects/incident-investigation/proxmox-i217lm-network-instability.md`](./projects/incident-investigation/proxmox-i217lm-network-instability.md)
+
+Demonstrates:
+
+* network interface troubleshooting
+* Linux diagnostics
+* Proxmox host investigation
+* root-cause analysis
+* remediation documentation
+
+### Recursive DNS Hardening
+
+[`projects/incident-investigation/recursive-dns-hardening.md`](./projects/incident-investigation/recursive-dns-hardening.md)
+
+Demonstrates:
+
+* DNS troubleshooting
+* recursive resolver hardening
+* DNSSEC validation
+* infrastructure validation
+* production-style change documentation
+
+---
+
+## Technologies
+
+### Networking
+
+* Ubiquiti UniFi
+* VLANs
+* firewall policy
+* site-to-site VPN
+* WireGuard
+* OpenWrt
+
+### Systems
+
+* Proxmox VE
+* Linux
+* LXC
+* Docker
+* Bash
+
+### Infrastructure Services
+
+* Pi-hole
+* Unbound
+* Caddy
+* internal PKI
+
+### Monitoring
+
+* LibreNMS
+* SNMPv3
+* service monitoring
+* infrastructure alerting
+
+### DevOps and Operations
+
+* Git
+* GitHub
+* GitHub Actions
+* CI/CD workflows
+* shell scripting
+* change management
+* runbooks
+* technical documentation
+
+---
+
+## Skills Demonstrated
+
+This environment demonstrates practical experience with:
+
+* infrastructure architecture
+* network engineering
+* Linux systems administration
+* virtualization
+* container administration
+* network segmentation
+* firewall policy
+* DNS infrastructure
+* VPN architecture
+* monitoring and observability
+* SNMPv3
+* reverse proxy architecture
+* PKI and TLS
+* troubleshooting
+* incident response
+* automation
+* Git workflows
+* technical documentation
+
+---
+
+## Repository Documentation
+
+Detailed infrastructure documentation includes:
+
+* [`00-network-overview.md`](./00-network-overview.md)
+* [`01-ip-addressing-plan.md`](./01-ip-addressing-plan.md)
+* [`02-vlan-design.md`](./02-vlan-design.md)
+* [`03-firewall-policy.md`](./03-firewall-policy.md)
+* [`04-wireless-design.md`](./04-wireless-design.md)
+* [`05-vpn-architecture.md`](./05-vpn-architecture.md)
+* [`06-dns-architecture.md`](./06-dns-architecture.md)
+* [`07-network-topology.md`](./07-network-topology.md)
+* [`architecture.md`](./architecture.md)
+
+---
+
+## Current Focus
+
+The environment continues to evolve in the following areas:
+
+* expanded monitoring and observability
+* infrastructure automation
+* centralized logging
+* backup validation
+* service resiliency
+* configuration management
+* improved operational documentation
+
+---
+
+## Purpose
+
+The purpose of this project is to demonstrate hands-on infrastructure engineering experience through a real, actively maintained environment.
+
+Rather than documenting theoretical designs alone, the repository focuses on systems that are deployed, operated, monitored, troubleshot, improved, and maintained over time.
+
+This provides practical experience relevant to roles including:
+
+* Systems Administrator
+* Infrastructure Engineer
+* Network Engineer
+* NOC Analyst
+* Technical Support Engineer
+* IT Operations Engineer
+
+---
+
+## Public Repository Notice
+
+This repository contains sanitized infrastructure documentation.
+
+Public IP addresses, credentials, secrets, tokens, private keys, internal identifiers, and sensitive operational configuration are intentionally excluded or modified before publication.
