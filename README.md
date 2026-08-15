@@ -23,6 +23,16 @@ The lab is intentionally designed to resemble a small enterprise environment rat
 
 ## Architecture
 
+### Current Multi-Site Topology
+
+The current environment spans two sites connected through a site-to-site VPN and includes segmented VLANs, centralized DNS, virtualization, monitoring, storage, and application services.
+
+[View the full multi-site topology](./diagrams/full-multisite-topology.md)
+
+### Historical Diagrams
+
+Earlier architecture diagrams are retained under [`diagrams/archive/`](./diagrams/archive/) to document the evolution of the environment.
+
 ### Network Architecture
 
 ![Network Architecture](./diagrams/network-architecture.png)
