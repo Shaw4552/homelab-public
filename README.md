@@ -33,18 +33,6 @@ The current environment spans two sites connected through a site-to-site VPN and
 
 Earlier architecture diagrams are retained under [`diagrams/archive/`](./diagrams/archive/) to document the evolution of the environment.
 
-### Network Architecture
-
-![Network Architecture](./diagrams/network-architecture.png)
-
-### VLAN Trust Model
-
-![VLAN Trust Model](./diagrams/vlan-trust-model.png)
-
-### Site A Detailed Topology
-
-![Site A Topology](./diagrams/site-a-topology.png)
-
 ---
 
 ## Core Infrastructure

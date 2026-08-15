@@ -139,14 +139,14 @@ flowchart TB
     UDMP <-->|Site-to-Site VPN| UDR7
 
     DNS1 -. DNS redundancy / policy .-> DNS2
-    DNS1 -. DNS redundancy / recursion .-> DNS3
+    DNS1 -.->|DNS redundancy / recursion| DNS3
 
-    LIBRE -. SNMPv3 / Monitoring .-> UDMP
-    LIBRE -. SNMPv3 / Monitoring .-> UDR7
-    LIBRE -. Monitoring .-> PVE
-    LIBRE -. Monitoring .-> DNS1
-    LIBRE -. Monitoring .-> DNS2
-    LIBRE -. Monitoring .-> DNS3
+    LIBRE -.->|SNMPv3 / Monitoring| UDMP
+    LIBRE -.->|SNMPv3 / Monitoring| UDR7
+    LIBRE -.->|Monitoring| PVE
+    LIBRE -.->|Monitoring| DNS1
+    LIBRE -.->|Monitoring| DNS2
+    LIBRE -.->|Monitoring| DNS3
 
     NAS <-->|Storage / Media| PLEXB
     NAS <-->|Shared Storage| MEDIA
