@@ -1,11 +1,10 @@
-# Full Multi-Site Infrastructure Topology
-
-This diagram provides a sanitized logical overview of the Site A and Site B infrastructure environment.
-
-```mermaid
 flowchart TB
 
     INTERNET((Internet))
+
+    %% =========================================================
+    %% SITE A
+    %% =========================================================
 
     subgraph SITEA["SITE A — Primary Infrastructure"]
         direction TB
@@ -15,14 +14,13 @@ flowchart TB
 
         ATT --> UDMP
 
-        subgraph A_NETWORKS["Site A Network Segmentation"]
+        subgraph A_NETWORKS["Network Segmentation"]
             A10["VLAN 10<br/>Admin"]
             A20["VLAN 20<br/>Trusted"]
             A30["VLAN 30<br/>IoT"]
             A50["VLAN 50<br/>Servers"]
             A60["VLAN 60<br/>Work"]
             A70["VLAN 70<br/>Kids"]
-            A75["VLAN 75<br/>Media Acquisition"]
             A99["VLAN 99<br/>Infrastructure"]
         end
 
@@ -32,14 +30,13 @@ flowchart TB
         UDMP --> A50
         UDMP --> A60
         UDMP --> A70
-        UDMP --> A75
         UDMP --> A99
 
-        subgraph A_SERVICES["Site A Core Services"]
-            NAS["NAS / Storage"]
+        subgraph A_SERVICES["Core Infrastructure & Services"]
+            NAS["WD My Cloud PR4100<br/>NAS / Storage"]
             DNS1["dns01-sitea<br/>Pi-hole + Unbound"]
             CADDY["Caddy<br/>Internal HTTPS / PKI"]
-            PLEXA["Plex<br/>Site A"]
+            PLEXA["Plex Media Server"]
         end
 
         A50 --> NAS
@@ -48,106 +45,107 @@ flowchart TB
         A50 --> PLEXA
     end
 
+
+    %% =========================================================
+    %% SITE B
+    %% =========================================================
+
     subgraph SITEB["SITE B — Compute / Lab"]
         direction TB
 
-        SPECTRUM["Spectrum Internet"]
-        UDR7["UniFi Dream Router 7<br/>Routing • Firewall • VPN"]
+        ISP_B["Internet Connection"]
+        UDR["UniFi Dream Router<br/>Routing • Firewall • VPN"]
         WIRELESS["UniFi / OpenWrt<br/>Wireless Infrastructure"]
 
-        SPECTRUM --> UDR7
-        UDR7 --> WIRELESS
+        ISP_B --> UDR
+        UDR --> WIRELESS
 
-        subgraph B_NETWORKS["Site B Network Segmentation"]
+        subgraph B_NETWORKS["Network Segmentation"]
             B10["VLAN 10<br/>Admin"]
             B20["VLAN 20<br/>Trusted"]
             B30["VLAN 30<br/>IoT"]
             B50["VLAN 50<br/>Servers"]
             B60["VLAN 60<br/>Work"]
             B70["VLAN 70<br/>Kids"]
-            B75["VLAN 75<br/>Media Acquisition"]
             B99["VLAN 99<br/>Infrastructure"]
         end
 
-        UDR7 --> B10
-        UDR7 --> B20
-        UDR7 --> B30
-        UDR7 --> B50
-        UDR7 --> B60
-        UDR7 --> B70
-        UDR7 --> B75
-        UDR7 --> B99
+        UDR --> B10
+        UDR --> B20
+        UDR --> B30
+        UDR --> B50
+        UDR --> B60
+        UDR --> B70
+        UDR --> B99
 
         subgraph PVE["Proxmox VE — pve01"]
             ADMIN["VM 110<br/>Admin Workstation"]
             PLEXB["CT 120<br/>Plex"]
-            MEDIA["CT 130<br/>Media Automation"]
             NAVI["CT 131<br/>Navidrome"]
             FILES["CT 135<br/>Filebrowser"]
             IMMICH["CT 140<br/>Immich"]
             UPTIME["CT 150<br/>Uptime Monitoring"]
-            YTDLP["CT 160<br/>yt-dlp API"]
-            MUDL["CT 165<br/>mu-dl-api"]
+            API1["CT 160<br/>Application API"]
+            API2["CT 165<br/>Application API"]
             LIBRE["CT 170<br/>LibreNMS"]
-            KIDS["VM 198<br/>Kids Desktop"]
+            KIDS["VM 198<br/>Client Workstation"]
         end
 
         B99 --> PVE
 
         B10 --> ADMIN
         B50 --> PLEXB
-        B75 --> MEDIA
         B50 --> NAVI
         B50 --> FILES
         B50 --> IMMICH
         B99 --> UPTIME
-        B50 --> YTDLP
-        B50 --> MUDL
+        B50 --> API1
+        B50 --> API2
         B99 --> LIBRE
         B70 --> KIDS
 
-        subgraph DNSB["Site B DNS"]
+        subgraph DNSB["DNS Infrastructure"]
             DNS2["dns02-siteb<br/>Pi-hole"]
             DNS3["dns03-siteb<br/>Pi-hole + Unbound"]
         end
 
         B99 --> DNS2
         B99 --> DNS3
-
-        subgraph MEDIASTACK["Media Automation Stack"]
-            GLUETUN["Gluetun<br/>ExpressVPN"]
-            QBIT["qBittorrent"]
-            RADARR["Radarr"]
-            SONARR["Sonarr"]
-            LIDARR["Lidarr"]
-            PROWLARR["Prowlarr"]
-        end
-
-        MEDIA --> GLUETUN
-        MEDIA --> QBIT
-        MEDIA --> RADARR
-        MEDIA --> SONARR
-        MEDIA --> LIDARR
-        MEDIA --> PROWLARR
-
-        QBIT --> GLUETUN
     end
 
+
+    %% =========================================================
+    %% WAN / INTER-SITE CONNECTIVITY
+    %% =========================================================
+
     INTERNET --> ATT
-    INTERNET --> SPECTRUM
+    INTERNET --> ISP_B
 
-    UDMP <-->|Site-to-Site VPN| UDR7
+    UDMP <-->|Site-to-Site VPN| UDR
 
-    DNS1 -. DNS redundancy / policy .-> DNS2
+
+    %% =========================================================
+    %% DNS REDUNDANCY
+    %% =========================================================
+
+    DNS1 -.->|DNS redundancy / policy| DNS2
     DNS1 -.->|DNS redundancy / recursion| DNS3
 
-    LIBRE -.->|SNMPv3 / Monitoring| UDMP
-    LIBRE -.->|SNMPv3 / Monitoring| UDR7
+
+    %% =========================================================
+    %% MONITORING
+    %% =========================================================
+
+    LIBRE -.->|SNMPv3| UDMP
+    LIBRE -.->|SNMPv3| UDR
     LIBRE -.->|Monitoring| PVE
     LIBRE -.->|Monitoring| DNS1
     LIBRE -.->|Monitoring| DNS2
     LIBRE -.->|Monitoring| DNS3
 
+
+    %% =========================================================
+    %% STORAGE
+    %% =========================================================
+
     NAS <-->|Storage / Media| PLEXB
-    NAS <-->|Shared Storage| MEDIA
-```
