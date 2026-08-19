@@ -1,3 +1,8 @@
+# Full Multi-Site Infrastructure Topology
+
+This diagram provides a sanitized logical overview of the Site A and Site B infrastructure environment.
+
+```mermaid
 flowchart TB
 
     INTERNET((Internet))
@@ -14,7 +19,7 @@ flowchart TB
 
         ATT --> UDMP
 
-        subgraph A_NETWORKS["Network Segmentation"]
+        subgraph A_NETWORKS["Site A Network Segmentation"]
             A10["VLAN 10<br/>Admin"]
             A20["VLAN 20<br/>Trusted"]
             A30["VLAN 30<br/>IoT"]
@@ -32,11 +37,11 @@ flowchart TB
         UDMP --> A70
         UDMP --> A99
 
-        subgraph A_SERVICES["Core Infrastructure & Services"]
+        subgraph A_SERVICES["Site A Core Services"]
             NAS["WD My Cloud PR4100<br/>NAS / Storage"]
             DNS1["dns01-sitea<br/>Pi-hole + Unbound"]
             CADDY["Caddy<br/>Internal HTTPS / PKI"]
-            PLEXA["Plex Media Server"]
+            PLEXA["Plex<br/>Site A"]
         end
 
         A50 --> NAS
@@ -45,7 +50,6 @@ flowchart TB
         A50 --> PLEXA
     end
 
-
     %% =========================================================
     %% SITE B
     %% =========================================================
@@ -53,14 +57,14 @@ flowchart TB
     subgraph SITEB["SITE B — Compute / Lab"]
         direction TB
 
-        ISP_B["Internet Connection"]
-        UDR["UniFi Dream Router<br/>Routing • Firewall • VPN"]
+        SITEBISP["Internet Connection"]
+        UDR7["UniFi Dream Router 7<br/>Routing • Firewall • VPN"]
         WIRELESS["UniFi / OpenWrt<br/>Wireless Infrastructure"]
 
-        ISP_B --> UDR
-        UDR --> WIRELESS
+        SITEBISP --> UDR7
+        UDR7 --> WIRELESS
 
-        subgraph B_NETWORKS["Network Segmentation"]
+        subgraph B_NETWORKS["Site B Network Segmentation"]
             B10["VLAN 10<br/>Admin"]
             B20["VLAN 20<br/>Trusted"]
             B30["VLAN 30<br/>IoT"]
@@ -70,13 +74,13 @@ flowchart TB
             B99["VLAN 99<br/>Infrastructure"]
         end
 
-        UDR --> B10
-        UDR --> B20
-        UDR --> B30
-        UDR --> B50
-        UDR --> B60
-        UDR --> B70
-        UDR --> B99
+        UDR7 --> B10
+        UDR7 --> B20
+        UDR7 --> B30
+        UDR7 --> B50
+        UDR7 --> B60
+        UDR7 --> B70
+        UDR7 --> B99
 
         subgraph PVE["Proxmox VE — pve01"]
             ADMIN["VM 110<br/>Admin Workstation"]
@@ -88,7 +92,7 @@ flowchart TB
             API1["CT 160<br/>Application API"]
             API2["CT 165<br/>Application API"]
             LIBRE["CT 170<br/>LibreNMS"]
-            KIDS["VM 198<br/>Client Workstation"]
+            KIDS["VM 198<br/>Kids Desktop"]
         end
 
         B99 --> PVE
@@ -104,7 +108,7 @@ flowchart TB
         B99 --> LIBRE
         B70 --> KIDS
 
-        subgraph DNSB["DNS Infrastructure"]
+        subgraph DNSB["Site B DNS"]
             DNS2["dns02-siteb<br/>Pi-hole"]
             DNS3["dns03-siteb<br/>Pi-hole + Unbound"]
         end
@@ -113,16 +117,14 @@ flowchart TB
         B99 --> DNS3
     end
 
-
     %% =========================================================
     %% WAN / INTER-SITE CONNECTIVITY
     %% =========================================================
 
     INTERNET --> ATT
-    INTERNET --> ISP_B
+    INTERNET --> SITEBISP
 
-    UDMP <-->|Site-to-Site VPN| UDR
-
+    UDMP <-->|Site-to-Site VPN| UDR7
 
     %% =========================================================
     %% DNS REDUNDANCY
@@ -131,21 +133,20 @@ flowchart TB
     DNS1 -.->|DNS redundancy / policy| DNS2
     DNS1 -.->|DNS redundancy / recursion| DNS3
 
-
     %% =========================================================
     %% MONITORING
     %% =========================================================
 
-    LIBRE -.->|SNMPv3| UDMP
-    LIBRE -.->|SNMPv3| UDR
+    LIBRE -.->|SNMPv3 / Monitoring| UDMP
+    LIBRE -.->|SNMPv3 / Monitoring| UDR7
     LIBRE -.->|Monitoring| PVE
     LIBRE -.->|Monitoring| DNS1
     LIBRE -.->|Monitoring| DNS2
     LIBRE -.->|Monitoring| DNS3
-
 
     %% =========================================================
     %% STORAGE
     %% =========================================================
 
     NAS <-->|Storage / Media| PLEXB
+```
