@@ -24,18 +24,20 @@ Design objectives:
 
 Each VLAN represents a logical security zone.
 
-| VLAN | Name           | Purpose                              |
-| ---- | -------------- | ------------------------------------ |
-| 10   | Admin          | management and administrative access |
-| 20   | Trusted        | primary user devices                 |
-| 30   | IoT            | low-trust smart devices              |
-| 40   | Guest          | internet-only access                 |
-| 50   | Servers        | application and service hosting      |
-| 60   | Work           | work-specific devices                |
-| 70   | Kids           | restricted user devices              |
-| 80   | Quarantine     | isolated or untrusted devices        |
-| 90   | Gaming         | entertainment systems                |
-| 99   | Infrastructure | core network and control plane       |
+| VLAN | Name                  | Purpose                                      |
+| ---- | --------------------- | -------------------------------------------- |
+| 10   | Admin                 | privileged management and administration    |
+| 15   | Recovery / Provisioning | device recovery and provisioning workflows |
+| 20   | Trusted               | trusted user endpoints                       |
+| 30   | IoT                   | low-trust smart and embedded devices         |
+| 40   | Guest                 | isolated internet-only access                |
+| 50   | Servers               | application and service hosting              |
+| 60   | Work                  | work-specific endpoints                      |
+| 70   | Restricted Users      | restricted user and endpoint access          |
+| 75   | Media Services        | isolated media-related application services  |
+| 80   | Quarantine            | isolated or untrusted devices                |
+| 90   | Entertainment         | entertainment and media-consumption devices  |
+| 99   | Infrastructure        | core network and control-plane services      |
 
 ---
 
