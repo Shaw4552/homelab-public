@@ -54,23 +54,23 @@ The policy distinguishes between two primary traffic types:
 | Admin       | Infrastructure | device and platform management  |
 | Admin       | Servers        | service administration          |
 | Trusted     | Servers        | access to internal applications |
-| Trusted     | Infrastructure | limited services (e.g., DNS)    |
+| Trusted     | Infrastructure | limited approved services       |
 | Work        | Servers        | access to approved services     |
-| Automation  | IoT            | device control and monitoring   |
 | Remote Site | Core Services  | cross-site service access       |
 
 ---
 
 ## 🚫 Typical Blocked Flows
 
-| Source     | Destination    | Purpose                      |
-| ---------- | -------------- | ---------------------------- |
-| IoT        | Trusted        | prevent lateral movement     |
-| IoT        | Admin          | protect management systems   |
-| Guest      | Internal       | enforce internet-only access |
-| Entertainment    | Infrastructure | protect core services        |
-| Restricted Users | Admin/Infra    | restrict privileged access   |
-| Quarantine | Internal       | full isolation               |
+| Source           | Destination    | Purpose                                               |
+| ---------------- | -------------- | ----------------------------------------------------- |
+| IoT              | Trusted        | prevent lateral movement                              |
+| IoT              | Admin          | protect management systems                            |
+| Guest            | Internal       | enforce internet-only access                          |
+| Entertainment    | Infrastructure | protect core services                                 |
+| Restricted Users | Admin          | prevent privileged management access                  |
+| Restricted Users | Infrastructure | deny general access except explicitly approved services |
+| Quarantine       | Internal       | full isolation                                        |
 
 ---
 
@@ -111,16 +111,18 @@ This improves both security and operational clarity.
 
 ---
 
-## ⚙️ Rule Evaluation Model
+## ⚙️ Policy Evaluation Model
 
-Firewall rules are processed in the following order:
+Firewall policy is structured so that required traffic is explicitly permitted while unauthorized inter-segment communication remains blocked.
 
-1. established and related traffic
-2. explicit allow rules
-3. explicit deny rules
-4. default deny
+Policy design considers:
 
-This ensures only intended traffic is permitted.
+1. established and related connections
+2. explicitly permitted service flows
+3. explicit isolation requirements
+4. deny-by-default behavior for unauthorized inter-VLAN traffic
+
+Actual rule ordering and evaluation are validated against the firewall platform to ensure intended policy behavior.
 
 ---
 
