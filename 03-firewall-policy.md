@@ -68,8 +68,8 @@ The policy distinguishes between two primary traffic types:
 | IoT        | Trusted        | prevent lateral movement     |
 | IoT        | Admin          | protect management systems   |
 | Guest      | Internal       | enforce internet-only access |
-| Gaming     | Infrastructure | protect core services        |
-| Kids       | Admin/Infra    | restrict privileged access   |
+| Entertainment    | Infrastructure | protect core services        |
+| Restricted Users | Admin/Infra    | restrict privileged access   |
 | Quarantine | Internal       | full isolation               |
 
 ---
