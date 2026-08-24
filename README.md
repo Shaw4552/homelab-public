@@ -66,11 +66,11 @@ Servers
 ↓
 Trusted / Work
 ↓
-Media / Application Zones
+Media Services
 ↓
-Gaming
+Entertainment
 ↓
-Kids
+Restricted Users
 ↓
 IoT
 ↓
@@ -365,3 +365,4 @@ This provides practical experience relevant to roles including:
 This repository contains sanitized infrastructure documentation.
 
 Public IP addresses, credentials, secrets, tokens, private keys, internal identifiers, and sensitive operational configuration are intentionally excluded or modified before publication.
+Network names, identifiers, and service descriptions may be generalized for public documentation while preserving the implemented security boundaries, architecture, and policy relationships.
