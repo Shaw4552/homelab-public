@@ -16,13 +16,13 @@ Design objectives:
 * enforce security boundaries between network segments
 * minimize lateral (east-west) movement
 * provide controlled access to infrastructure services
-* maintain consistent segmentation across multiple sites
+* maintain consistent segmentation standards across multiple sites
 
 ---
 
 ## 🧠 VLAN Design
 
-Each VLAN represents a logical security zone.
+Each VLAN represents a logical network segment associated with an operational role and security posture.
 
 | VLAN | Name                  | Purpose                                      |
 | ---- | --------------------- | -------------------------------------------- |
@@ -43,12 +43,14 @@ Each VLAN represents a logical security zone.
 
 ## 🌐 Logical Topology
 
-The environment consists of two sites with consistent segmentation:
+The environment consists of two sites connected through secure inter-site connectivity:
 
-* **Site A** hosts infrastructure and services
-* **Site B** provides endpoint access
+* **Site A** serves as the primary infrastructure location and hosts core services
+* **Site B** serves as the primary compute and lab environment
 
-Both sites implement the same VLAN structure to maintain consistency and simplify routing and policy enforcement.
+A common VLAN numbering and naming convention is used where applicable across sites to improve operational consistency, simplify troubleshooting, and support predictable policy design.
+
+Not every VLAN is necessarily instantiated at every site; network segments are deployed based on operational requirements.
 
 ### High-Level Flow
 
@@ -69,6 +71,12 @@ Traffic between VLANs is tightly controlled and enforced through firewall policy
 ---
 
 ### Example Flows
+
+**Restricted User Access to Infrastructure Services**
+
+Restricted Users VLAN → Firewall → Approved Infrastructure Service / Port
+
+Access from restricted endpoints to infrastructure services is granted only when operationally required and is limited to explicitly defined destinations and services.
 
 **User Access to Services**
 
@@ -99,7 +107,7 @@ The segmentation model follows a zero-trust–inspired approach:
 
 * infrastructure and services are separated from user networks
 * VLAN IDs align with subnet structure for operational clarity
-* segmentation is consistent across sites to simplify troubleshooting
+* VLAN numbering and naming conventions are standardized across sites where applicable to simplify troubleshooting and policy management
 * server networks exist at each site for architectural consistency
 
 ---
