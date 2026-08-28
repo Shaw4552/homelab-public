@@ -1,5 +1,16 @@
 # Enterprise-Style Homelab Infrastructure Portfolio
 
+## Operational Case Studies
+
+### Linux Mint Wi-Fi Recovery
+
+Diagnosed and resolved a persistent Broadcom Wi-Fi failure involving NetworkManager, kernel authentication events, incomplete driver capabilities, DKMS compilation, GRUB rollback, and Debian package recovery.
+
+The repair restored dual-band Wi-Fi using a compatible kernel and the Broadcom STA driver while preserving a tested rollback path throughout the change.
+
+[Read the complete case study →](docs/case-studies/linux-mint-broadcom-wifi-recovery.md)
+
+
 ## Overview
 
 This repository documents a multi-site homelab environment designed around enterprise infrastructure, networking, security, monitoring, automation, and operational reliability.
