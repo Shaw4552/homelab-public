@@ -25,7 +25,7 @@ flowchart TB
             A30["VLAN 30<br/>IoT"]
             A50["VLAN 50<br/>Servers"]
             A60["VLAN 60<br/>Work"]
-            A70["VLAN 70<br/>Kids"]
+            A70["VLAN 70<br/>Restricted Users"]
             A99["VLAN 99<br/>Infrastructure"]
         end
 
@@ -70,7 +70,7 @@ flowchart TB
             B30["VLAN 30<br/>IoT"]
             B50["VLAN 50<br/>Servers"]
             B60["VLAN 60<br/>Work"]
-            B70["VLAN 70<br/>Kids"]
+            B70["VLAN 70<br/>Restricted Users"]
             B99["VLAN 99<br/>Infrastructure"]
         end
 
@@ -92,7 +92,7 @@ flowchart TB
             API1["CT 160<br/>Application API"]
             API2["CT 165<br/>Application API"]
             LIBRE["CT 170<br/>LibreNMS"]
-            KIDS["VM 198<br/>Kids Desktop"]
+            RUSER["VM 198<br/>Restricted User Workstation"]
         end
 
         B99 --> PVE
@@ -106,7 +106,7 @@ flowchart TB
         B50 --> API1
         B50 --> API2
         B99 --> LIBRE
-        B70 --> KIDS
+        B70 --> RUSER
 
         subgraph DNSB["Site B DNS"]
             DNS2["dns02-siteb<br/>Pi-hole"]
