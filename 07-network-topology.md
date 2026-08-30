@@ -40,7 +40,7 @@ Servers    Services
        │
  Client Networks
 (Trusted / Work / IoT /
- Guest / Gaming / Kids)
+ Guest / Entertainment / Restricted Users)
 ```
 
 ---
@@ -69,7 +69,7 @@ Site B provides connectivity for user devices.
 Typical components:
 
 * user and work devices
-* gaming and media systems
+* entertainment endpoints and media-consumption devices
 * IoT devices
 * wireless access networks
 
