@@ -59,7 +59,7 @@ The environment includes:
 * site-to-site VPN connectivity
 * centralized DNS
 * internal HTTPS and PKI
-* infrastructure monitoring
+* infrastructure monitoring and observability
 * operational backup and recovery procedures
 
 ---
@@ -157,31 +157,46 @@ Operational tasks include:
 
 ## Monitoring and Observability
 
-The environment includes centralized infrastructure monitoring using LibreNMS and SNMPv3.
+The environment uses a layered monitoring and observability architecture rather than relying on a single platform.
+
+The current stack includes:
+
+* Uptime Kuma for availability and reachability monitoring
+* LibreNMS with SNMPv3 for network-device, interface, traffic, and error monitoring
+* Prometheus for time-series infrastructure and Proxmox metrics
+* Grafana for dashboards and visualization
+
+The Prometheus environment includes a dedicated Proxmox monitoring integration using a read-only API identity and restricted exporter access.
+
+The implementation demonstrates:
+
+* least-privilege API access
+* Proxmox API monitoring
+* TLS certificate validation
+* internal certificate-authority trust
+* segmented monitoring traffic
+* restricted exporter exposure
+* Prometheus target validation
+* Grafana dashboard integration
+* DNS and firewall troubleshooting
+* monitoring backup and recovery
 
 Monitoring covers infrastructure such as:
 
-* Proxmox hosts
-* Linux containers
+* Proxmox hosts and guests
+* Linux systems and containers
 * UniFi networking devices
 * application infrastructure
 * DNS systems
 * network availability
 * service health
+* virtualization resource usage
 
 The monitoring environment is documented separately in the public project:
 
 [**enterprise-monitoring-observability**](https://github.com/Shaw4552/enterprise-monitoring-observability)
 
-This project demonstrates:
-
-* device onboarding
-* SNMPv3 configuration
-* infrastructure health monitoring
-* alerting design
-* service visibility
-* operational troubleshooting
-* monitoring documentation
+That project documents the monitoring architecture, deployment process, troubleshooting, operational validation, runbooks, and recovery procedures.
 
 ---
 
@@ -279,10 +294,15 @@ Demonstrates:
 * Caddy
 * internal PKI
 
-### Monitoring
+### Monitoring and Observability
 
+* Prometheus
+* Grafana
 * LibreNMS
+* Uptime Kuma
 * SNMPv3
+* Proxmox VE API monitoring
+* Node Exporter
 * service monitoring
 * infrastructure alerting
 
@@ -313,15 +333,19 @@ This environment demonstrates practical experience with:
 * DNS infrastructure
 * VPN architecture
 * monitoring and observability
+* Prometheus and Grafana
 * SNMPv3
+* API integration
+* least-privilege access control
 * reverse proxy architecture
 * PKI and TLS
-* troubleshooting
+* troubleshooting and root-cause analysis
+* backup and recovery
 * incident response
 * automation
 * Git workflows
 * technical documentation
-
+  
 ---
 
 ## Repository Documentation
@@ -344,7 +368,7 @@ Detailed infrastructure documentation includes:
 
 The environment continues to evolve in the following areas:
 
-* expanded monitoring and observability
+* monitoring baselines and actionable alerting
 * infrastructure automation
 * centralized logging
 * backup validation
